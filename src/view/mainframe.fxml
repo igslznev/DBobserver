@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import javafx.collections.*?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.*?>
 
-<Pane maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefHeight="500.0" prefWidth="550.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controller.MainFrameController">
+<Pane maxHeight="-1.0" maxWidth="-1.0" minHeight="500.0" minWidth="550.0" prefHeight="500.0" prefWidth="850.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controller.MainFrameController">
   <children>
-    <AnchorPane layoutX="0.0" layoutY="0.0" prefHeight="510.0" prefWidth="219.5">
+    <Pane layoutX="0.0" layoutY="1.0" prefHeight="499.0" prefWidth="220.0">
       <children>
         <Label layoutX="14.0" layoutY="21.0" text="LONJA IS HUI" />
         <ComboBox fx:id="queryComboBox" layoutX="14.0" layoutY="37.0" onAction="#onActionComboBox" onMouseClicked="#onComboBoxClick" prefWidth="191.5" promptText="Выберите запрос" />
         <Pane fx:id="queryParameterPane" layoutX="0.0" layoutY="72.0" prefHeight="322.0" prefWidth="220.0" />
+        <Button fx:id="startButton" alignment="CENTER" layoutX="14.0" layoutY="466.0" mnemonicParsing="false" onMouseClicked="#onClickStartButton" prefWidth="113.0" text="Выполнить" underline="false" />
+        <Button fx:id="connectionButton" layoutX="14.0" layoutY="435.0" mnemonicParsing="false" onAction="#onClickConnectionButton" prefWidth="113.0000084472631" text="Подключиться">
+          <font>
+            <Font size="11.0" />
+          </font>
+        </Button>
       </children>
-    </AnchorPane>
-    <TableView fx:id="queryTable" layoutX="220.0" layoutY="0.0" prefHeight="500.0" prefWidth="330.0" />
-    <Button fx:id="startButton" layoutX="14.0" layoutY="466.0" mnemonicParsing="false" onMouseClicked="#onClickStartButton" text="Выполнить" />
+    </Pane>
+    <Pane fx:id="paneTable" layoutX="220.0" layoutY="0.0" prefHeight="500.0" prefWidth="630.0" />
   </children>
 </Pane>
