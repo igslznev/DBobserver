@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class Query {
-    public abstract void paneChange(Pane pane);
+    public abstract void paneChange(Pane pane, Connection connection);
 
     public abstract String toString();
 

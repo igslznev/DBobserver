@@ -3,11 +3,18 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import query.*;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.sql.SQLException;
 
 
 public class MainFrameController {
@@ -17,7 +24,7 @@ public class MainFrameController {
     @FXML
     private Pane paneTable = new Pane();
     private Query currentQuery;
-    private DBController dbController = new DBController();
+    private static DBController dbController = new DBController();
 
     private AllQueries allQueries = new AllQueries(new GetTypesInsurance(),
             new PrizeSumCabinet(), new ClientContractInfo(),
@@ -25,9 +32,18 @@ public class MainFrameController {
     @FXML
     private Pane queryParameterPane = new Pane();
     @FXML
+    private Button startButton;
+    @FXML
+    private Button transactionButton;
+
+    public static DBController getDBController() {
+        return dbController;
+    }
+
+    @FXML
     private void onClickStartButton(Event event) {
         try {
-            if(currentQuery == null) {
+            if (currentQuery == null) {
                 throw new NullPointerException("Выберите запрос");
             }
 
@@ -37,8 +53,8 @@ public class MainFrameController {
                     .setEndpoint(API)//В метод setEndpoint передаем адрес нашего сайта
                     .build();*/
 
-            if(currentQuery.getTable(dbController.getConnection(),"") != null) {
-                paneTable.getChildren().addAll(currentQuery.getTable(dbController.getConnection(),""));
+            if (currentQuery.getTable(dbController.getConnection(), "") != null) {
+                paneTable.getChildren().addAll(currentQuery.getTable(dbController.getConnection(), ""));
             } else {
                 throw new NullPointerException("Данные не введены или не корректны");
             }
@@ -77,6 +93,8 @@ public class MainFrameController {
             masters.setItems(data);
             paneTable.getChildren().addAll(masters);*/
 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Данные не найдены!", "Ошибка!", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка!", JOptionPane.ERROR_MESSAGE);
         }
@@ -88,7 +106,7 @@ public class MainFrameController {
     public void onActionComboBox(ActionEvent actionEvent) { // метод, изменяющий окно в зависимости от выбранного запроса
         try {
             currentQuery = (Query) queryComboBox.getValue();
-            currentQuery.paneChange(queryParameterPane);
+            currentQuery.paneChange(queryParameterPane, dbController.getConnection());
         } catch (RuntimeException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка!", JOptionPane.ERROR_MESSAGE);
         }
@@ -105,10 +123,28 @@ public class MainFrameController {
             alert.setTitle("Успех!");
             alert.setHeaderText(null);
             alert.setContentText("Подключение установлено!");
+            queryComboBox.setDisable(false);
+            startButton.setDisable(false);
+            transactionButton.setDisable(false);
 
             alert.showAndWait();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void onTransactionButtonClick(ActionEvent actionEvent) {
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("view/transactionframe.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Транзакции");
+            stage.setScene(new Scene(root, 335, 360));
+            stage.show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

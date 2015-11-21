@@ -24,7 +24,7 @@ public final class GetTypesInsurance extends Query {
     private static DatePicker startTimeField = new DatePicker(),
             finishTimeField = new DatePicker();
 
-    @Override public void paneChange(Pane pane) {
+    @Override public void paneChange(Pane pane, Connection connection) {
         pane.getChildren().removeAll(pane.getChildren());
         startTimeLabel.relocate(10, 0);
         startTimeField.relocate(10, 15);

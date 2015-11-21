@@ -1,13 +1,11 @@
 package query;
 
+import formElement.NameTextField;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
@@ -20,25 +18,42 @@ import java.sql.*;
 
 public final class ClientContractInfo extends Query {
     private static String comboBoxText = "Вывести полную информацию обо всех " +
-            "договорах данного клиента данного клиента";
+            "договорах данного клиента";
     private static Label clientLabel = new Label("Имя клиента");
-    private static TextField clientField = new TextField();
+    private static NameTextField clientField = new NameTextField();
+    private static ComboBox clientComboBox = new ComboBox();
 
     @Override
-    public void paneChange(Pane pane) {
+    public void paneChange(Pane pane, Connection connection)  {
         pane.getChildren().removeAll(pane.getChildren());
         clientLabel.relocate(10, 0);
-        clientField.relocate(10, 15);
-        pane.getChildren().addAll(clientLabel, clientField);
+        clientComboBox.relocate(10, 15);
+        try {
+            ObservableList<ObservableList> data = FXCollections.observableArrayList();
+            ResultSet rs = connection.createStatement().executeQuery("SELECT name FROM ClientContractInfo;");
+            while (rs.next()) {
+                ObservableList<Object> row = FXCollections.observableArrayList();
+                row.add(rs.getString(1).toString());
+                data.add(row);
+            }
+
+            clientComboBox.setItems(data);
+            pane.getChildren().addAll(clientLabel, clientComboBox);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public TableView getTable(Connection connection, String querySQL) throws SQLException {
-        if(clientField.getText().isEmpty()) {
-            return null;
+        String name = "";
+        for (int i = 1; i < clientComboBox.getValue().toString().length() - 1; i++) {
+            name += clientComboBox.getValue().toString().charAt(i);
         }
         return super.getTable(connection,
-                "SELECT * FROM ClientContractInfo WHERE name = \"" + clientField.getText() + "\";");
+                "SELECT * FROM ClientContractInfo WHERE name = \"" + name + "\";");
 
 
 

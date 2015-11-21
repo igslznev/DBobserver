@@ -32,7 +32,7 @@ public final class SumPriceClientYear extends Query {
 
 
     @Override
-    public void paneChange(Pane pane) {
+    public void paneChange(Pane pane, Connection connection) {
         pane.getChildren().removeAll(pane.getChildren());
         startTimeLabel.relocate(10, 0);
         startTimeField.relocate(10, 15);

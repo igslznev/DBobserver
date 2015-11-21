@@ -23,7 +23,7 @@ public final class WrongContractAgent extends Query {
             "заключённые агентами по тем видам страхования, в которых они не разбираются";
 
     @Override
-    public void paneChange(Pane pane) {
+    public void paneChange(Pane pane, Connection connection) {
         pane.getChildren().removeAll(pane.getChildren());
     }
 
