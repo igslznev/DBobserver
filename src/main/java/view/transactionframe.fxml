@@ -38,7 +38,7 @@
         <Label font="$x1" layoutX="9.0" layoutY="87.0" text="Идентификатор клиента" />
         <Label font="$x1" layoutX="139.0" layoutY="87.0" text="Идентификатор агента" />
         <NumberTextField id="clientIdField" fx:id="clientIdField" cache="false" layoutX="8.0" layoutY="103.0" prefWidth="119.0" />
-        <NumberTextField fx:id="agentIdField" layoutX="139.0" layoutY="103.0" prefWidth="119.0" />
+        <NumberTextField fx:id="agentIdField" layoutX="139.0" onKeyReleased="#onAgentChange" layoutY="103.0" prefWidth="119.0" />
         <ChoiceBox id="typeChoise" fx:id="typeChoise"  layoutX="10.0" layoutY="154.0" prefWidth="200.0">
           <items>
             <FXCollections fx:factory="observableArrayList">

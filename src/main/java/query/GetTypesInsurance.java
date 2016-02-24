@@ -7,8 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import model.GetTypesInsuranceModel;
-import retrofit.GetTypesInsuranceInterface;
-import retrofit.RestAdapter;
 
 import javax.swing.*;
 import java.sql.Connection;

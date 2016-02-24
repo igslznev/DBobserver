@@ -53,7 +53,18 @@ public class MainFrameController {
                     .setEndpoint(API)//В метод setEndpoint передаем адрес нашего сайта
                     .build();*/
 
-            if (currentQuery.getTable(dbController.getConnection(), "") != null) {
+            if(currentQuery.getClass() == WrongContractAgent.class) {
+                if (currentQuery.getTable(dbController.getConnection(), "") != null) {
+                    TableView table = currentQuery.getTable(dbController.getConnection(), "");
+                    TableView rtable = currentQuery.getRightTable(dbController.getConnection(), "");
+                    table.setPrefHeight(250);
+                    rtable.setPrefHeight(250);
+                    rtable.relocate(0,250);
+                    paneTable.getChildren().addAll(table, rtable);
+                } else {
+                    throw new NullPointerException("Данные не введены или не корректны");
+                }
+            }else if (currentQuery.getTable(dbController.getConnection(), "") != null) {
                 paneTable.getChildren().addAll(currentQuery.getTable(dbController.getConnection(), ""));
             } else {
                 throw new NullPointerException("Данные не введены или не корректны");
@@ -136,7 +147,7 @@ public class MainFrameController {
     public void onTransactionButtonClick(ActionEvent actionEvent) {
         Parent root;
         try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("view/transactionframe.fxml"));
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("main/java/view/transactionframe.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Транзакции");
             stage.setScene(new Scene(root, 335, 360));

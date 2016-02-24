@@ -13,9 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import model.PrizeSumCabinetModel;
 import model.testModel;
-import retrofit.PrizeSumCabinetInterface;
-import retrofit.RestAdapter;
-import retrofit.testInterface;
 
 import javax.swing.*;
 import java.sql.Connection;

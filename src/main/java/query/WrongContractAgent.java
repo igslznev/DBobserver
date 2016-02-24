@@ -8,14 +8,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import model.WrongContractAgentModel;
-import retrofit.RestAdapter;
-import retrofit.WrongContractAgentInterface;
 
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public final class WrongContractAgent extends Query {
@@ -27,7 +27,16 @@ public final class WrongContractAgent extends Query {
         pane.getChildren().removeAll(pane.getChildren());
     }
 
-    @Override
+    public TableView getRightTable(Connection connection, String querySQL) throws SQLException {
+            ArrayList<Integer> data = new ArrayList<>();
+            ResultSet rs = connection.createStatement().executeQuery("SELECT Agents_agent_id FROM WrongAgentTypes;");
+            while (rs.next()) {
+                data.add(rs.getInt(1));
+            }
+            return super.getTable(connection, "SELECT agent_id,type FROM AgentsManageTypes WHERE agent_id = " + data.get(0) +";");
+    }
+
+    //@Override
     public TableView getTable(Connection connection, String querySQL) throws SQLException {
         return super.getTable(connection, "SELECT * FROM WrongAgentTypes;");
 

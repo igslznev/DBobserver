@@ -17,6 +17,10 @@ public abstract class Query {
 
     public abstract String toString();
 
+    public TableView getRightTable(Connection connection, String querySQL) throws SQLException{
+        return null;
+    }
+
     public TableView getTable(Connection connection, String querySQL) throws SQLException { // возвращает таблицу, заполненную данными из базы
         ResultSet rs = connection.createStatement().executeQuery(querySQL);
 

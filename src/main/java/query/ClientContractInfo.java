@@ -8,10 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import javafx.util.Callback;
-import model.ClientContractInfoModel;
-import retrofit.ClientContractInfoInterface;
-import retrofit.RestAdapter;
 
 import javax.swing.*;
 import java.sql.*;
